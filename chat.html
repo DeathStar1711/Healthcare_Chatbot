@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .message-container {
+            margin-bottom: 10px;
+        }
+        .user-message {
+            background-color: #0079FF;
+            color:white;
+            padding: 5px;
+            border-radius: 5px;
+            float: right;
+            clear: both;
+            max-width: 60%;
+        }
+        .bot-message {
+            background-color: #f2f2f2;
+            padding: 5px;
+            border-radius: 5px;
+            float: left;
+            clear: both;
+            max-width: 60%;
+        }
+        #chat-container {
+            max-height: 400px;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="mb-4">Chat</h1>
+        <div id="chat-container">
+            {% for message in messages %}
+                <div class="message-container">
+                    {% if message.role == 'user' %}
+                        <p class="user-message">{{ message.content }}</p>
+                    {% elif message.role == 'assistant' %}
+                        <p class="bot-message">{{ message.content }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        <form action="/chat" method="POST" class="mt-4">
+            <div class="form-group">
+                <input type="text" name="user_message" placeholder="Type your message" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+        <form action="/" class="mt-4">
+            <button type="submit" class="btn btn-secondary">Back</button>
+        </form>
+    </div>
+</body>
+</html>
